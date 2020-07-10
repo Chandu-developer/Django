@@ -1,0 +1,73 @@
+-> Scalability :- Even more no's requests have to handle.
+-> Versatile :- Everywhere we can use from small to big web applications.
+-> __init__.py :- This file will shows that the folder is a python package.
+-> Webserver :- The main job of webserver is it provides environment to run our application.
+-> View :- It always takes httprequest as a request and provides httpResponse. It contains all required business logic.
+           Two types of views 1)Function based and 2)Class based views
+-> The function in a view always takes request as an argument and returns the response
+-> In django.http module HttpResponse is available
+	from django.http import HttpResponse
+-> In views in place of request you can take any name.
+-> A single project can contain any number of applications.
+-> If we dont add our applications in the settings.py/Installed_Apps then django would not recognize our applications.
+-> e.g.., In urls if two apps are given like bleow:
+	from app1 import views
+	from app2 import views
+	So whenever we are giving 2 views the first view will get overided so in order to solve this issue we will give alias name for each view as below:
+	from app1 import views as app1_view
+	from app2 import views as app2_view
+
+->Why we will create urls.py in every application?
+   For e.g., if we have 3 apps and in each app nearly 50 views are there in that case we need to add all 150 views in project level urls
+   So inorder to solve this issue we will create urls.py file in each app and keep all the views urls of the app in that file.
+   And finally we will include those urls file in the project level urls.py file
+   It solves issues like whenever we are reusing the app then there is no need to add all the urls to the proj level urls.py file
+   
+
+Template -> It is simply a html file.
+-> How template works :- 1)When a user send a request it will directly goes to the proj level urls.py file.
+			 2)From there it goes to the app level urls.py file
+			 3)Then it goes to the views.py file in that app
+			 4)Finally view renders the appropriate file from the templates folder and sends back to the view and that response will be displayed
+			   to the user.
+-> These template files will be designed by UI experts.
+-> Normally view is designed for business logic and model for data structure/database and template is for presentation.
+-> So one imp thing after creating business logic in view func this business logic is used by template file to provide the response.
+
+-> This is how BASE_DIR works in settings.py module:
+	For e.g.., I have a file name example.py in directory c:/Users/779900/django/example.py, then if we give the following cmds we will get:
+	import os
+	print(__file__) o/p:- example.py (It shows the present file name)
+	print(os.path.abspath(__file__) o/p:-c:/Users/779900/django/example.py (It shows the entire path of the file)
+	print(os.path.dirname(os.path.abspath(__file__))) o/p:-c:/Users/779900/django/ (It shows the directory till the file name and it excludes the filename)
+	so now let
+	BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+So in order to add templates folder to the settings.py file we use as below:
+	os.path.join(BASE_DIR,'templates')
+
+-> How to send html files in templates folder to the views.py file?
+	In templates folder we will create the html files
+	And in views we will render the file that is needed like in views
+	return render(request,'store/items.html',context)
+	Now why we wrote only store/items.html instead of all the path bcz all the path is already provided in the settings.py till the main proj name.
+
+-> How to inject dynamic content from view func to template file?
+	To inject dynamic content into view func 2 ways r there 1)Template tags {{here key value from dict in the view}} and 
+	2)Template variables {% %} :-Jinja2 template lang
+	
+-> We need to create static files for css and storing images.
+	create a static folder inside create sub-folders for css and images
+	And to add this static folder to the proj
+	Go to settings and under STATIC_URL = '/static/'
+	create a variable which is predefined as below
+	STATIC_DIRS = [
+			os.path.join(BASE_DIR,'static')
+		      ]
+	Inorder to access the static files in the templates file
+	Go to some html file in the templates folder where u need the static files then give {% load static %}
+
+	
+
+
+
+
